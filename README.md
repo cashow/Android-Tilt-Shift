@@ -4,8 +4,8 @@
 
 径向移轴：
 
-![tilt-shift-round](http://7xjvhq.com1.z0.glb.clouddn.com/tilt-shift-round-1.gif)
+![tilt-shift-round](https://github.com/cashow/Android-Tilt-Shift/blob/master/demo/tilt-shift-round.gif)
 
 线性移轴：
 
-![tilt-shift-line](http://7xjvhq.com1.z0.glb.clouddn.com/tilt-shift-line-1.gif)
+![tilt-shift-line](https://github.com/cashow/Android-Tilt-Shift/blob/master/demo/tilt-shift-line.gif)
