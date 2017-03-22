@@ -37,3 +37,7 @@ com.cashow.tiltshift
         SquareImageView.java    // 正方形的ImageView
         SquareRelativeLayout.java    // 正方形的RelativeLayout
 ```
+
+### TODO
+
+将移轴效果做成module
