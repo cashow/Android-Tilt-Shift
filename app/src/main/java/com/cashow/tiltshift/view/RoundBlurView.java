@@ -17,6 +17,10 @@ import com.cashow.tiltshift.util.BitmapUtils;
 import com.cashow.tiltshift.util.Constants;
 
 
+/**
+ * 这个文件是径向移轴的效果图
+ * 外界需要把中心点、移轴半径传进来，由这个自定义view生成最终的移轴效果
+ */
 public class RoundBlurView extends AppCompatImageView {
 
 	private int bitmapResizedWidth;
@@ -40,6 +44,15 @@ public class RoundBlurView extends AppCompatImageView {
 		super(context, attrs);
 	}
 
+	/**
+	 * 这个方法是将移轴的数据转成移轴效果图
+	 * @param blur_type：PREVIEW_IMAGE表示要加载高模糊度的图片，FINAL_IMAGE表示要加载低模糊度的图片
+	 * @param tiltX：移轴的中心点x坐标
+	 * @param tiltY：移轴的中心点y坐标
+	 * @param tiltRadius：移轴区域的半径
+	 * @param previewBitmap：高模糊度的图片
+	 * @param finalBitmap：低模糊度的图片
+	 */
 	public void setData(int blur_type, float tiltX, float tiltY, float tiltRadius, Bitmap previewBitmap, Bitmap finalBitmap) {
 		float tiltGradientRadius = tiltRadius / 2.0f;
 

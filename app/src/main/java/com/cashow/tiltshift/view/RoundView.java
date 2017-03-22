@@ -19,7 +19,7 @@ import com.cashow.tiltshift.util.Utils;
 
 public class RoundView extends AppCompatImageView {
 	/**
-	 * 进行径向移轴时的辅助线，包含有2个bitmap，中心辅助定位的bitmap和外围的圆形边界
+	 * 径向移轴的辅助线，包含有2个bitmap: 中心辅助定位的bitmap和外围的圆形边界
 	 */
 
     // 辅助线中心辅助定位的bitmap

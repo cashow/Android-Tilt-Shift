@@ -10,27 +10,39 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader.TileMode;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 import com.cashow.tiltshift.util.BitmapUtils;
 import com.cashow.tiltshift.util.Constants;
+import com.cashow.tiltshift.util.Utils;
 
 
-public class LinearBlurView extends ImageView {
-
+/**
+ * 这个文件是线性移轴的效果图
+ * 外界需要把中心点、旋转角度、移轴半径传进来，由这个自定义view生成最终的移轴效果
+ */
+public class LinearBlurView extends AppCompatImageView {
+    // 移轴效果的bitmap
 	private Bitmap shiftBitmap;
+    // 移轴效果的画布
 	private Canvas shiftCanvas;
+    // 移轴效果的画笔
 	private Paint paint;
 
+    // 图片的大小
 	private int bitmapResizedWidth;
+    // 图片缩放的比例
 	private double bitmapResizedRatio;
 
 	public LinearBlurView(Activity mActivity, int bitmapResizedWidth, double bitmapResizedRatio) {
 		this(mActivity, null);
 		this.bitmapResizedWidth = bitmapResizedWidth;
         this.bitmapResizedRatio = bitmapResizedRatio;
+
+        // 创建一个 bitmapResizedWidth * bitmapResizedWidth 的bitmap
 		shiftBitmap = Bitmap.createBitmap(bitmapResizedWidth, bitmapResizedWidth, Config.ARGB_8888);
+        // 指定shiftBitmap的画布
 		shiftCanvas = new Canvas(shiftBitmap);
 		paint = new Paint();
 	}
@@ -39,6 +51,16 @@ public class LinearBlurView extends ImageView {
 		super(context, attrs);
 	}
 
+    /**
+     * 这个方法是将移轴的数据转成移轴效果图
+     * @param blur_type：PREVIEW_IMAGE表示要加载高模糊度的图片，FINAL_IMAGE表示要加载低模糊度的图片
+     * @param centerX：移轴的中心点x坐标
+     * @param centerY：移轴的中心点y坐标
+     * @param tiltRotate：移轴的旋转角度
+     * @param tiltHeight：移轴区域的半径
+     * @param previewBitmap：高模糊度的图片
+     * @param finalBitmap：低模糊度的图片
+     */
 	public void setData(int blur_type, float centerX, float centerY, float tiltRotate, float tiltHeight,
 			Bitmap previewBitmap, Bitmap finalBitmap) {
 
@@ -65,18 +87,18 @@ public class LinearBlurView extends ImageView {
 			tiltNewRotate -= 180.0;
 		}
 
-		float tiltTopHeight1 = clamp(newCenterY - newTiltHeight / 2, 0.0f, bitmapResizedWidth);
+		float tiltTopHeight1 = Utils.clamp(newCenterY - newTiltHeight / 2, 0.0f, bitmapResizedWidth);
 
 		float tiltTopHeight2;
 		float tiltTopHeight3;
 		if (blur_type == Constants.PREVIEW_IMAGE) {
-			tiltTopHeight2 = clamp(newCenterY - newTiltHeight / 2 + 3, 0.0f, bitmapResizedWidth);
-			tiltTopHeight3 = clamp(newCenterY + newTiltHeight / 2 - 3, 0.0f, bitmapResizedWidth);
+			tiltTopHeight2 = Utils.clamp(newCenterY - newTiltHeight / 2 + 3, 0.0f, bitmapResizedWidth);
+			tiltTopHeight3 = Utils.clamp(newCenterY + newTiltHeight / 2 - 3, 0.0f, bitmapResizedWidth);
 		} else {
-			tiltTopHeight2 = clamp(newCenterY - newTiltHeight / 4, 0.0f, bitmapResizedWidth);
-			tiltTopHeight3 = clamp(newCenterY + newTiltHeight / 4, 0.0f, bitmapResizedWidth);
+			tiltTopHeight2 = Utils.clamp(newCenterY - newTiltHeight / 4, 0.0f, bitmapResizedWidth);
+			tiltTopHeight3 = Utils.clamp(newCenterY + newTiltHeight / 4, 0.0f, bitmapResizedWidth);
 		}
-		float tiltTopHeight4 = clamp(newCenterY + newTiltHeight / 2, 0.0f, bitmapResizedWidth);
+		float tiltTopHeight4 = Utils.clamp(newCenterY + newTiltHeight / 2, 0.0f, bitmapResizedWidth);
 
 		float positions[] = new float[6];
 		positions[0] = 0.0f;
@@ -114,16 +136,6 @@ public class LinearBlurView extends ImageView {
 
 		shiftCanvas.drawBitmap(BitmapUtils.getResizedBitmap(bitmap, bitmapWidth, bitmapHeight),
 				(bitmapResizedWidth - bitmapWidth) / 2, (bitmapResizedWidth - bitmapHeight) / 2, null);
-	}
-
-	private float clamp(float a, float min, float max) {
-		if (a < min + 1e-8) {
-			a = min;
-		}
-		if (a > max - 1e-8) {
-			a = max;
-		}
-		return a;
 	}
 
 	public Bitmap getLinearShiftBitmap(){
