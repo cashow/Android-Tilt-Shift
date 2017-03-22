@@ -3,7 +3,6 @@ package com.cashow.tiltshift.util;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -90,7 +89,6 @@ public class LinearBlurUtil {
 
         // 移轴效果初始的位置在屏幕最中间
         tilt.setPoint(screenWidth / 2, screenWidth / 2);
-        Log.d("wy", "x, y = " + screenWidth/2 + " " + screenWidth / 2);
         // 初始的移轴效果旋转角度是 0
         tiltRotate = 0.0f;
         // 将初始的移轴效果半径设置成屏幕宽度的 3/8
@@ -107,7 +105,7 @@ public class LinearBlurUtil {
         initAnimation();
     }
 
-    // 初始化移轴效果切换时的动画
+    // 初始化切换移轴效果的动画
     private void initAnimation() {
         animation_alpha_in = AnimationUtils.loadAnimation(context, R.anim.alpha_in);
         animation_alpha_out = AnimationUtils.loadAnimation(context, R.anim.photo_alpha_out);
@@ -191,10 +189,12 @@ public class LinearBlurUtil {
     public boolean handleBlurLinearEvent(MotionEvent event) {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_POINTER_DOWN:
+                // 在出现新的触摸点时记录下触摸点的坐标
                 pre0.x = event.getX(0);
                 pre0.y = event.getY(0);
 
                 if (event.getPointerCount() >= 2) {
+                    // 如果有2个以上的触摸点，记录第二个触摸点的坐标并计算2个触摸点之间初始的距离
                     pre1.x = event.getX(1);
                     pre1.y = event.getY(1);
 
@@ -202,6 +202,7 @@ public class LinearBlurUtil {
                 }
                 break;
             case MotionEvent.ACTION_DOWN:
+                // 在出现新的触摸点时记录下触摸点的坐标
                 pre.x = event.getRawX();
                 pre.y = event.getRawY();
 
@@ -214,22 +215,28 @@ public class LinearBlurUtil {
                 }
 
                 if (event.getPointerCount() == 1) {
+                    // 如果只有一个触摸点，将isMoved置为falst并记录点击的时间
+                    // 这2个变量是用来判断这次触摸事件是不是单纯的点击事件
                     isMoved = false;
                     lastClickTime = System.currentTimeMillis();
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (pre.x == -1 && pre.y == -1) {
+                    // 如果没有记录上一次触摸点的位置，将这次的位置赋值给上一次触摸点pre
                     pre.x = event.getRawX();
                     pre.y = event.getRawY();
                     return true;
                 }
                 if (event.getPointerCount() == 1) {
+                    // 只有一个触摸点时，记录现在的触摸点的位置
                     current.x = event.getRawX();
                     current.y = event.getRawY();
 
                     if ((Math.abs(current.x - pre.x) > 1e-8 && Math.abs(current.y - pre.y) > 1e-8)
                             || System.currentTimeMillis() - lastClickTime > 300) {
+                        // 如果触摸点移动过了，或者触摸时间超过300ms，那么这一次的触摸事件就不认定成点击事件
+                        // 触摸点移动时移轴效果的中心点也要跟着移动
                         if (!isMoved) {
                             isMoved = true;
                             startAnimation(lineview, animation_alpha_in, ANIM_TOUCH);
@@ -246,6 +253,9 @@ public class LinearBlurUtil {
                         setLinearBlurView(Constants.PREVIEW_IMAGE);
                     }
                 } else if (event.getPointerCount() == 2) {
+                    // 有2个触摸点时要缩放和旋转移轴的显示区域
+                    // 触摸点距离变大，需要加大移轴效果的半径
+                    // 2个触摸点组成的向量相当于上一次向量有旋转，需要相对应地旋转移轴的角度
                     isMoved = true;
                     current0.x = event.getX(0);
                     current0.y = event.getY(0);
@@ -302,13 +312,14 @@ public class LinearBlurUtil {
             case MotionEvent.ACTION_UP:
                 if (event.getPointerCount() == 1) {
                     if (!isMoved) {
-                        // 如果这次触摸事件结束后触摸点没有进行移动，那么将移轴效果的中心点设置成现在的触摸点坐标
+                        // 如果这次触摸事件结束后触摸点没有进行移动，那么这次触摸事件可以认定是点击事件
+                        // 这个时候应该将移轴效果的中心点设置成现在的触摸点坐标
                         tilt.x = event.getRawX();
                         tilt.y = event.getRawY();
 
                         startAnimation(lineview, animation_alpha_in, ANIM_INIT);
                     } else {
-                        // 如果这次触摸事件结束后触摸点进行了移动，那么显示移轴效果结束的动画
+                        // 如果这次触摸事件结束后触摸点进行了移动，那么显示移轴效果淡出的动画
                         startAnimation(lineview, animation_alpha_out, ANIM_TOUCH);
                         setLinearBlurView(Constants.FINAL_IMAGE);
                     }
