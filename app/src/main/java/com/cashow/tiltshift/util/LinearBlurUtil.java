@@ -322,7 +322,7 @@ public class LinearBlurUtil {
                         startAnimation(lineview, animation_alpha_in, ANIM_INIT);
                     } else {
                         // 如果这次触摸事件结束后触摸点进行了移动，那么显示移轴效果淡出的动画
-                        startAnimation(lineview, animation_alpha_out, ANIM_TOUCH);
+                        startAnimation(lineview, animation_alpha_out, ANIM_INIT_FINISHED);
                         setLinearBlurView(Constants.FINAL_IMAGE);
                     }
                 }

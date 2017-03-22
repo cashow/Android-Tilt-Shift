@@ -64,7 +64,7 @@ public class RoundBlurUtil {
 
 	private static final int ANIM_INIT = 1;
 	private static final int ANIM_TOUCH = 2;
-	private static final int ANIM_AFTER_INIT = 3;
+	private static final int ANIM_INIT_FINISHED = 3;
 
 	public RoundBlurUtil(Activity mActivity) {
 		this.context = mActivity.getApplicationContext();
@@ -128,7 +128,7 @@ public class RoundBlurUtil {
 		case ANIM_TOUCH:
 			roundview.setVisibility(View.VISIBLE);
 			break;
-		case ANIM_AFTER_INIT:
+		case ANIM_INIT_FINISHED:
 			setRoundBlurView(Constants.PREVIEW_IMAGE);
 			break;
 		default:
@@ -139,13 +139,13 @@ public class RoundBlurUtil {
 	private void animationEnd() {
 		switch (animationType) {
 		case ANIM_INIT:
-			startAnimation(roundview, animation_alpha_out, ANIM_AFTER_INIT);
+			startAnimation(roundview, animation_alpha_out, ANIM_INIT_FINISHED);
 			break;
 		case ANIM_TOUCH:
 			setRoundBlurView(Constants.PREVIEW_IMAGE);
 			roundview.setVisibility(View.GONE);
 			break;
-		case ANIM_AFTER_INIT:
+		case ANIM_INIT_FINISHED:
 			setRoundBlurView(Constants.FINAL_IMAGE);
 			roundview.setVisibility(View.GONE);
 			break;
@@ -240,7 +240,7 @@ public class RoundBlurUtil {
 					startAnimation(roundview, animation_alpha_in, ANIM_INIT);
 				} else {
                     // 如果这次触摸事件结束后触摸点进行了移动，那么显示移轴效果淡出的动画
-                    startAnimation(roundview, animation_alpha_out, ANIM_TOUCH);
+                    startAnimation(roundview, animation_alpha_out, ANIM_INIT_FINISHED);
 					setRoundBlurView(Constants.FINAL_IMAGE);
 				}
 			}
