@@ -15,7 +15,7 @@ import com.cashow.tiltshift.view.LinearBlurView;
 
 
 /**
- * 这个util是用来记录和控制线性移轴相关的数据及业务逻辑，例如移轴的半径、宽度之类的
+ * 这个util是用来记录和控制线性移轴相关的数据及业务逻辑，例如移轴的半径、角度之类的
  * 用来显示移轴效果的自定义view放在linearBlurview里，用来显示移轴辅助线的自定义view放在lineview里
  * 外界并不会直接对linearBlurview和lineview进行操作，所有操作都需要通过调用LinearBlurUtil的接口实现
  * 这个util相当于MVP模式中的model层
@@ -50,6 +50,7 @@ public class LinearBlurUtil {
     // 屏幕宽度
     private int screenWidth;
 
+    // isMoved和lastClickTime是用来判断这次触摸事件是不是单纯的点击事件
     private boolean isMoved;
     private long lastClickTime;
 
@@ -58,6 +59,7 @@ public class LinearBlurUtil {
     // 移轴效果操作完毕后显示的低模糊度bitmap
     private Bitmap finalBitmap;
 
+    // 移轴效果渐隐渐出的动画效果
     private Animation animation_alpha_in;
     private Animation animation_alpha_init_in;
     private Animation animation_alpha_out;
@@ -70,7 +72,7 @@ public class LinearBlurUtil {
     private Activity mActivity;
     private Context context;
 
-    // 目前的动画类型，有3种动画类型：
+    // 目前的动画类型。有3种动画类型：
     // ANIM_INIT：从其他移轴效果切换到线性移轴效果时要显示的动画，主要是显示移轴预览效果以及辅助线
     // ANIM_INIT_FINISHED：在ANIM_INIT动画结束后会立即调用ANIM_INIT_FINISHED动画，主要是隐藏移轴预览效果以及辅助线
     // ANIM_TOUCH：用户开始拖动和缩放移轴区域时要显示的动画，在动画开始前要显示预览效果及辅助线，动画结束后隐藏预览效果及辅助线
@@ -215,7 +217,7 @@ public class LinearBlurUtil {
                 }
 
                 if (event.getPointerCount() == 1) {
-                    // 如果只有一个触摸点，将isMoved置为falst并记录点击的时间
+                    // 如果只有一个触摸点，将isMoved置为false并记录点击的时间
                     // 这2个变量是用来判断这次触摸事件是不是单纯的点击事件
                     isMoved = false;
                     lastClickTime = System.currentTimeMillis();
@@ -332,6 +334,7 @@ public class LinearBlurUtil {
     }
 
     private void setLinearBlurView(int blur_type) {
+        // 移轴的位置和区域大小有变化时，都需要调用这个函数提示更新移轴图片和辅助线
         linearBlurview.setData(blur_type, tilt.x, tilt.y, tiltRotate, tiltHeight, previewBitmap, finalBitmap);
         linearBlurview.invalidate();
 
