@@ -57,11 +57,18 @@ public class RoundBlurView extends AppCompatImageView {
 		float tiltGradientRadius = tiltRadius / 2.0f;
 
 		if (blur_type == Constants.PREVIEW_IMAGE) {
+            // 绘制高模糊度的图片
 			drawBitmap(previewBitmap);
 		} else {
+            // 绘制低模糊度的图片
 			drawBitmap(finalBitmap);
 		}
 
+        // 现在需要绘制一个带有渐变透明度的shader
+        // 总共有4个区域
+        // 0到1的区域是完全不透明
+        // 1到2的区域是从不透明渐变到透明
+        // 2到3的区域是完全透明
 		int colors[] = new int[4];
 		colors[0] = 0x00ffffff;
 		colors[1] = 0x00ffffff;
@@ -86,12 +93,15 @@ public class RoundBlurView extends AppCompatImageView {
 		positions[2] = tiltRadius2 / tiltRadius;
 		positions[3] = 1.0f;
 
+        // 将屏幕上的坐标转成bitmap的坐标
 		float shaderTiltX = (float) (tiltX / bitmapResizedRatio);
 		float shaderTiltY = (float) (tiltY / bitmapResizedRatio);
+        // 将屏幕上的移轴半径改成bitmap的移轴半径
 		float shaderTiltRadius = (float) (tiltRadius / bitmapResizedRatio);
 
 		RadialGradient shader = new RadialGradient(shaderTiltX, shaderTiltY, shaderTiltRadius, colors, positions, TileMode.CLAMP);
 		paint.setShader(shader);
+        // Mode.DST_IN是绘制2层图片的交集，在这里是将模糊图片与带有渐变透明度的shader取交集进行绘制。
 		paint.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
 		shiftCanvas.drawRect(0, 0, bitmapResizedWidth, bitmapResizedWidth, paint);
 

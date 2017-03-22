@@ -64,16 +64,27 @@ public class LinearBlurView extends AppCompatImageView {
 	public void setData(int blur_type, float centerX, float centerY, float tiltRotate, float tiltHeight,
 			Bitmap previewBitmap, Bitmap finalBitmap) {
 
+        // 将屏幕上的坐标转成bitmap的坐标
 		float newCenterX = (float) (centerX / bitmapResizedRatio);
 		float newCenterY = (float) (centerY / bitmapResizedRatio);
+        // 将屏幕上的移轴半径改成bitmap的移轴半径
 		float newTiltHeight = (float) (tiltHeight / bitmapResizedRatio);
 
 		if (blur_type == Constants.PREVIEW_IMAGE) {
+            // 绘制高模糊度的图片
 			drawBitmap(previewBitmap);
 		} else {
+            // 绘制低模糊度的图片
 			drawBitmap(finalBitmap);
 		}
 
+		// 现在需要绘制一个带有渐变透明度的shader
+        // 总共有6个区域
+        // 0到1的区域是完全不透明
+        // 1到2的区域是从不透明渐变到透明
+        // 2到3的区域是完全透明
+        // 3到4的区域是从透明渐变到不透明
+        // 4到5的区域是完全不透明
 		int colors[] = new int[6];
 		colors[0] = 0xffffffff;
 		colors[1] = 0xffffffff;
@@ -82,6 +93,7 @@ public class LinearBlurView extends AppCompatImageView {
 		colors[4] = 0xffffffff;
 		colors[5] = 0xffffffff;
 
+        // 计算新的旋转角度
 		double tiltNewRotate = 360.0 - tiltRotate;
 		while (tiltNewRotate >= 180.0) {
 			tiltNewRotate -= 180.0;
@@ -91,6 +103,7 @@ public class LinearBlurView extends AppCompatImageView {
 
 		float tiltTopHeight2;
 		float tiltTopHeight3;
+
 		if (blur_type == Constants.PREVIEW_IMAGE) {
 			tiltTopHeight2 = Utils.clamp(newCenterY - newTiltHeight / 2 + 3, 0.0f, bitmapResizedWidth);
 			tiltTopHeight3 = Utils.clamp(newCenterY + newTiltHeight / 2 - 3, 0.0f, bitmapResizedWidth);
@@ -112,6 +125,7 @@ public class LinearBlurView extends AppCompatImageView {
 
 		paint.setShader(shader);
 		paint.setAntiAlias(true);
+        // Mode.DST_IN是绘制2层图片的交集，在这里是将模糊图片与带有渐变透明度的shader取交集进行绘制。
 		paint.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
 
 		shiftCanvas.save();
