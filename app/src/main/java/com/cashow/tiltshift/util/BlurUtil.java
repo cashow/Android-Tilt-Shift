@@ -71,9 +71,9 @@ public class BlurUtil {
     private void init() {
         mContext = mActivity.getApplicationContext();
 
-        // 获取低模糊度图片
+        // 获取低模糊度图片。这张图片是预先处理好的，是在原图的基础上加了半径为5个像素的高斯模糊
         finalBitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.sample_blur);
-        // 获取高模糊度图片
+        // 获取高模糊度图片。这张图片是预先处理好的，是在原图的基础上加了半径为8个像素的高斯模糊
         previewBitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.sample_blur_preview);
 
         layout_blur = (RelativeLayout) mActivity.findViewById(R.id.layout_blur);
