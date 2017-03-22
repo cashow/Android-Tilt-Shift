@@ -142,7 +142,7 @@ public class RoundBlurUtil {
 			startAnimation(roundview, animation_alpha_out, ANIM_AFTER_INIT);
 			break;
 		case ANIM_TOUCH:
-			setRoundBlurView(Constants.FINAL_IMAGE);
+			setRoundBlurView(Constants.PREVIEW_IMAGE);
 			roundview.setVisibility(View.GONE);
 			break;
 		case ANIM_AFTER_INIT:

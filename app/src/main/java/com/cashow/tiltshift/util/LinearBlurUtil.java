@@ -163,7 +163,7 @@ public class LinearBlurUtil {
                 startAnimation(lineview, animation_alpha_out, ANIM_INIT_FINISHED);
                 break;
             case ANIM_TOUCH:
-                setLinearBlurView(Constants.FINAL_IMAGE);
+                setLinearBlurView(Constants.PREVIEW_IMAGE);
                 lineview.setVisibility(View.GONE);
                 break;
             case ANIM_INIT_FINISHED:
@@ -256,8 +256,8 @@ public class LinearBlurUtil {
                     }
                 } else if (event.getPointerCount() == 2) {
                     // 有2个触摸点时要缩放和旋转移轴的显示区域
-                    // 触摸点距离变大，需要加大移轴效果的半径
-                    // 2个触摸点组成的向量相当于上一次向量有旋转，需要相对应地旋转移轴的角度
+                    // 如果触摸点距离变大，需要加大移轴效果的半径
+                    // 如果2个触摸点组成的向量相对于上一次向量有旋转，需要相对应地旋转移轴的角度
                     isMoved = true;
                     current0.x = event.getX(0);
                     current0.y = event.getY(0);
