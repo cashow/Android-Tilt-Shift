@@ -1,6 +1,8 @@
 ## 这个项目是实现类似Instagram的移轴效果。
 
-demo下载链接：<https://github.com/cashow/Android-Tilt-Shift/blob/master/demo/demo.apk>
+### demo下载链接
+
+<https://github.com/cashow/Android-Tilt-Shift/blob/master/demo/demo.apk>
 
 ### 径向移轴效果图
 
@@ -9,6 +11,16 @@ demo下载链接：<https://github.com/cashow/Android-Tilt-Shift/blob/master/dem
 ### 线性移轴效果图
 
 ![tilt-shift-line](https://github.com/cashow/Android-Tilt-Shift/blob/master/demo/tilt-shift-line.gif)
+
+--------------------
+
+### 实现原理
+
+移轴效果是利用了Paint的Xfermode里的Mode.DST_IN属性，这个属性的作用是将2张图片取交集。
+
+我们需要2张图片，一张是原图的高斯模糊图片，还有一张是中心区域是透明的，其他区域是不透明的纯白图片。将这2张图片取交集，就能得到中心是透明的高斯模糊图片。
+
+![tilt-shift-line](https://github.com/cashow/Android-Tilt-Shift/blob/master/demo/tilt-info.jpg)
 
 --------------------
 
