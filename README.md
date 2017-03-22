@@ -1,5 +1,7 @@
 ## 这个项目是实现类似Instagram的移轴效果。
 
+demo下载链接：<https://github.com/cashow/Android-Tilt-Shift/blob/master/demo/demo.apk>
+
 ### 径向移轴效果图
 
 ![tilt-shift-round](https://github.com/cashow/Android-Tilt-Shift/blob/master/demo/tilt-shift-round.gif)
