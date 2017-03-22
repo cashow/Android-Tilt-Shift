@@ -4,8 +4,8 @@
 
 径向移轴：
 
-![tilt-shift-round](http://7xjvhq.com1.z0.glb.clouddn.com/tilt-shift-round.gif)
+![tilt-shift-round](http://7xjvhq.com1.z0.glb.clouddn.com/tilt-shift-round-1.gif)
 
 线性移轴：
 
-![tilt-shift-line](http://7xjvhq.com1.z0.glb.clouddn.com/tilt-shift-line.gif)
+![tilt-shift-line](http://7xjvhq.com1.z0.glb.clouddn.com/tilt-shift-line-1.gif)
