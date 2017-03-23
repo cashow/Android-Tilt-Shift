@@ -3,7 +3,6 @@ package com.cashow.tiltshift.activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -58,13 +57,7 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         // 处理触摸事件
-        photo.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                return blurUtil.handleTouchEvent(event);
-            }
-        });
+        photo.setOnTouchListener((view, event) -> blurUtil.handleTouchEvent(event));
     }
 
     private void initBlurUtil() {

@@ -29,6 +29,7 @@
 ```
 com.cashow.tiltshift
     activity    // activity文件夹
+        BaseActivity.java    // 存放activity常用的函数
         MainActivity.java    // 主界面的activity
 
     data    // 需要使用到的数据类文件夹
@@ -39,6 +40,7 @@ com.cashow.tiltshift
         BlurUtil.java    // 这个文件用来控制线性移轴和径向移轴的切换，并负责将触摸事件从activity
                             传到对应的 LinearBlurUtil 或者 RoundBlurUtil
         Constants.java    // 静态变量
+        GaussianBlur.java    // 用来生成高斯模糊的类
         LinearBlurUtil.java    // 用来记录和控制线性移轴相关的数据及业务逻辑
         RoundBlurUtil.java    // 用来记录和控制径向移轴相关的数据及业务逻辑
         Utils.java    // 常用的工具类
