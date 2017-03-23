@@ -52,6 +52,8 @@ com.cashow.tiltshift
         RoundView.java    // 径向移轴的辅助线
         SquareImageView.java    // 正方形的ImageView
         SquareRelativeLayout.java    // 正方形的RelativeLayout
+
+generate_demo_apk.sh    // 生成demo.apk的脚本
 ```
 
 ### TODO
