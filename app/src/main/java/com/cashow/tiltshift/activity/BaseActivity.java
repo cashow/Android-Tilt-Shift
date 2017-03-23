@@ -1,4 +1,4 @@
-package com.cashow.tiltshift.util;
+package com.cashow.tiltshift.activity;
 
 import android.content.Context;
 import android.os.Bundle;

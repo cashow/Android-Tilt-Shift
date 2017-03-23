@@ -9,7 +9,6 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.cashow.tiltshift.R;
-import com.cashow.tiltshift.util.BaseActivity;
 import com.cashow.tiltshift.util.BlurUtil;
 import com.cashow.tiltshift.util.GaussianBlur;
 import com.cashow.tiltshift.view.SquareImageView;
