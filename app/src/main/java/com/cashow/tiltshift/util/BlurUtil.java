@@ -3,7 +3,6 @@ package com.cashow.tiltshift.util;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -63,18 +62,15 @@ public class BlurUtil {
     public static final int BLUR_ROUND = 2;
 
 
-    public BlurUtil(Activity mActivity) {
+    public BlurUtil(Activity mActivity, Bitmap finalBitmap, Bitmap previewBitmap) {
         this.mActivity = mActivity;
+        this.finalBitmap = finalBitmap;
+        this.previewBitmap = previewBitmap;
         init();
     }
 
     private void init() {
         mContext = mActivity.getApplicationContext();
-
-        // 获取低模糊度图片。这张图片是预先处理好的，是在原图的基础上加了半径为5个像素的高斯模糊
-        finalBitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.sample_blur);
-        // 获取高模糊度图片。这张图片是预先处理好的，是在原图的基础上加了半径为8个像素的高斯模糊
-        previewBitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.sample_blur_preview);
 
         layout_blur = (RelativeLayout) mActivity.findViewById(R.id.layout_blur);
 
