@@ -2,7 +2,11 @@
 
 ### demo下载链接
 
-<https://github.com/cashow/Android-Tilt-Shift/blob/master/demo/demo.apk>
+<http://7sbs06.com1.z0.glb.clouddn.com/android_tilt_shift.apk>
+
+### demo 二维码
+
+![qrcode](https://github.com/cashow/Android-Tilt-Shift/blob/master/demo/qrcode.png)
 
 ### 径向移轴效果图
 
